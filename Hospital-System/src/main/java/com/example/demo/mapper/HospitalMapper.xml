@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+
+<mapper namespace="com.example.demo.mapper.HospitalMapper">
+	     <resultMap type="com.example.demo.entity.Inquery" id="inquery">
+	       <id column="inq_id" property="inq_id"/>
+	       <result property="inq_name" column="inq_name"/>
+	       <result property="sex" column="sex"/>
+	       <result property="phone" column="phone"/>
+	       <result property="date" column="date"/>
+	       <result property="time" column="time"/>
+	       <result property="result" column="result"/>
+	       <result property="status" column="status"/>
+	       <association property="dept" javaType="com.example.demo.entity.Dept">
+	            <id column="did" property="did"/>
+	       <result property="dept" column="dept"/>
+	       </association>
+	       <association property="doctor" javaType="com.example.demo.entity.Doctor">
+	        <id column="doc_id" property="doc_id"/>
+	       <result property="dname" column="dname"/>
+	       <result property="price" column="price"/>
+	       </association>
+	     </resultMap>
+		<select id="todayList" resultMap="inquery">
+		select que.*,dept.dept,doc.dname from hosp_inquery que left join hosp_dept dept on que.dept=dept.did left join hosp_doctor doc on que.doctor=doc.doc_id where que.result is null
+		</select>
+		<select id="findResult" resultMap="inquery">
+		select que.*,dept.dept,doc.dname from hosp_inquery que left join hosp_dept dept on que.dept=dept.did left join hosp_doctor doc on que.doctor=doc.doc_id where que.result is not null
+		<if test="mohu!=null">
+		and  que.inq_id=#{mohu}
+		</if> 
+		</select>
+</mapper>
+

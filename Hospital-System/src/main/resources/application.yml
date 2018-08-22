@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mysql://localhost:3306/demo
+    driver-class-name: com.mysql.jdbc.Driver
+    
+  mvc:
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
+      
+  servlet:
+    multipart:
+      max-file-size: 5000000
